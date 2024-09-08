@@ -1,0 +1,31 @@
+<mat-grid-list class="page-with-toolbar" rowHeight="fit" rows="1" cols="1">
+    <mat-grid-tile>
+        <app-data-table
+        title="Banners"
+        subtitle="Click to show info"
+        [data]="data"
+        [dataSize]="dataSize"
+        [columnDefs]="columnDefs"
+        [haveSearch]="true"
+        [menuBtns]="menuButtons!"
+        [btns]="btns!"
+        [isAsync]="true"
+        [pageSize]="30"
+        [sortActive]="'displayOrder'"
+        [menuLoadingRows]="loadingMenuItems$ | async"
+        [sortDirection]="'asc'"
+        [isLoading]="loadingList$ | async"
+        [filters]="filters"
+        (changed)="tableChange($event)"
+        (menuBtnClicked)="tableMenuClicked($event)"
+        (btnClicked)="buttonClicked($event)"
+        [showSubmit]="false"
+        [preserveQueryParams]="true"
+        [preserveSearchQuery]="true"
+        [isReport]="true"
+        [searchQueryPlaceHolder]="'Find by title'"
+        (rowClicked)="rowClicked($event)"
+        [clickable]="true"
+        ></app-data-table>
+    </mat-grid-tile>
+</mat-grid-list>

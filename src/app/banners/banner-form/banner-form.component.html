@@ -1,0 +1,60 @@
+<mat-toolbar color="primary">
+    <span *ngIf="data.banner">
+        Banner #{{data.banner.bannerId}} - update
+    </span>
+    <span *ngIf="!data.banner">
+        Add new Banner
+    </span>
+    <span class="full-spacer"></span>
+    <button mat-icon-button (click)="reset()"><mat-icon>refresh</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="frm">
+    <mat-grid-list rowHeight="50" cols="1">
+        <mat-grid-tile rowspan="3">
+            <div class="banner-image-container">
+                <img [src]="imageSource" onerror="this.onerror=null; this.src='assets/logo/logo-placeholder.png';">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <button mat-button type="button" (click)="image.click()"><mat-icon>edit</mat-icon> Edit Image</button>
+            <button mat-button color="warn" type="button" *ngIf="imageSource" (click)="deleteImage()"><mat-icon>delete</mat-icon> Delete Image</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list rowHeight="90" cols="1">
+        <input id="file-upload" #image
+            type="file" name="fileUpload" accept=".png,.jpg,.jpeg" (change)="previewImage($event)"/>
+        <mat-grid-tile>
+            <app-input [formGroup]="frm" controlName="BannerTitle" label="Title"></app-input>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <app-input [formGroup]="frm" controlName="Url" label="URL"></app-input>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field class="no-bottom full-width" floatLabel="always">
+                <mat-label>
+                    Banner Lifetime
+                </mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate formControlName="StartDate" [placeholder]="'Start Date'">
+                    <input matEndDate formControlName="ExpiryDate" [placeholder]="'End Date'">
+                </mat-date-range-input>
+                <mat-icon matPrefix matDatepickerToggleIcon svgIcon="calendar-icon"></mat-icon>
+                <mat-datepicker-toggle matIconSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-checkbox formControlName = "IsActive">Active</mat-checkbox>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <app-input [formGroup]="frm" controlName="DisplayOrder" label="Display Order" type="number"></app-input>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="primary" [disabled]="frm.invalid" [mat-dialog-close]="frm.value">Submit</button>
+        <button mat-button type="button" mat-dialog-close>Cancel</button>
+    </mat-dialog-actions>
+</form>
+

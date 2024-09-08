@@ -1,0 +1,27 @@
+<mat-grid-list class="page-with-toolbar" rowHeight="fit" rows="1" cols="1">
+    <mat-grid-tile>
+        <app-data-table
+        title="App Log"
+        subtitle="Click to show info"
+        [data]="data"
+        [dataSize]="dataSize"
+        [columnDefs]="(columnDefs | async)!"
+        [haveSearch]="true"
+        [isAsync]="true"
+        [pageSize]="30"
+        [sortActive]="'logDate'"
+        [sortDirection]="'desc'"
+        [isLoading]="isLoading$ | async"
+        [isDownloading]="isDownloading$ | async"
+        (changed)="tableChange($event)"
+        (downloadClicked)="download($event)"
+        [showSubmit]="false"
+        [preserveQueryParams]="true"
+        [preserveSearchQuery]="true"
+        [isReport]="true"
+        [filters]="filters!"
+        [searchQueryPlaceHolder]="'Find by content or mobile'"
+        [haveDownload]="true"
+        ></app-data-table>
+    </mat-grid-tile>
+</mat-grid-list>

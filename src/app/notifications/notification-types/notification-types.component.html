@@ -1,0 +1,58 @@
+<mat-grid-list rowHeight="100" [cols]="(isHandset$ | async) ? 1 : 4">
+<mat-grid-tile>
+    <button mat-raised-button style="width:90%;height:90%" routerLink="/notification-manual">
+        Manual by User
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button style="width:90%;height:90%" routerLink="/notification-manual" [queryParams]="{isAll:true}">
+        Broadcast to All Users
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button style="width:90%;height:90%" routerLink="/notification-manual" [queryParams]="{isExclude: true}">
+        Broadcast Excluding 
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button style="width:90%;height:90%" routerLink="/notification-history">
+        Notification History
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button color="accent" style="width:90%;height:90%"
+    [matMenuTriggerData]="{endPoint: 'near-expiry-users'}"
+    [mat-menu-trigger-for]="daysMenu">
+        About to expire memberships
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button color="accent" style="width:90%;height:90%"
+    [matMenuTriggerData]="{endPoint: 'expired-users'}"
+    [mat-menu-trigger-for]="daysMenu">
+        Expired memberships
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button color="primary" style="width:90%;height:90%" 
+    [matMenuTriggerData]="{endPoint: 'near-expiry-posts'}"
+    [mat-menu-trigger-for]="daysMenu">
+        About to expire posts
+    </button>
+</mat-grid-tile>
+<mat-grid-tile>
+    <button mat-raised-button color="primary" style="width:90%;height:90%" 
+    [matMenuTriggerData]="{endPoint: 'expired-posts'}"
+    [mat-menu-trigger-for]="daysMenu">
+        Expired posts
+    </button>
+</mat-grid-tile>
+</mat-grid-list>
+<mat-menu #daysMenu="matMenu">
+    <ng-template matMenuContent let-endPoint="endPoint">
+        <button mat-menu-item  *ngFor="let day of dayOptions" (click)="goToAutoNotifications(endPoint, day)">
+            {{day}} {{day > 1 ? 'days' : 'day'}}
+        </button>
+    </ng-template>
+    
+</mat-menu>

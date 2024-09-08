@@ -1,0 +1,17 @@
+<amr-icon-side-nav [items]="(authItems$ | async)!" toolbarMode="auto-hide" brand="Kelshi Mall" logoSrc="assets/logo/logo-vertical.png">
+    <div toolbar-start class="main-toolbar">
+        <h1 class="mat-h1">Kelshi Mall Admin 2.0</h1>
+    </div>
+    <div toolbar-end class="clickable">
+        <app-name-circle [name]="(authData$ | async)?.fullName!" [mat-menu-trigger-for]="accountMenu"></app-name-circle>
+        <mat-menu #accountMenu="matMenu">
+            <button mat-menu-item routerLink="change-password">
+                <mat-icon>password</mat-icon> Change Password
+            </button>
+            <button mat-menu-item (click)="logOut()">
+                <mat-icon color="warn">logout</mat-icon> Logout
+            </button>
+        </mat-menu>
+    </div>
+
+    
