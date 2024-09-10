@@ -2,7 +2,7 @@ import { USERS_ICON, ENVELOP_ICON, SEND_ICON, POST_ICON, LIST_ICON, REPORT_ICON,
 import { IconNavItemWithRoles } from "./side-nav-techteec";
 
 export const items: IconNavItemWithRoles[] = [
-    
+
     {
       title: 'Users',
       svgIcon: USERS_ICON,
@@ -14,7 +14,7 @@ export const items: IconNavItemWithRoles[] = [
             svgIcon: LIST_ICON,
             postition: 'top',
             routerLink: 'user-manager',
-            roles: ['User Manager', 'Super User'], 
+            roles: ['User Manager', 'Super User'],
         },
         {
             title: 'Messages',

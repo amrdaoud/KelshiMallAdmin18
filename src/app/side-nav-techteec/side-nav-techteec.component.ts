@@ -34,7 +34,7 @@ export class SideNavTechteecComponent extends Unsubscriber {
     if(auth?.roles.includes('Super User')) {
       return items;
     }
-    return items?.filter(x => !x.roles || x.roles.length === 0 || x.roles.find(r => auth?.roles?.includes(r.toLowerCase()))).map(x => {
+    return items?.filter(x => !x.roles || x.roles.length === 0 || x.roles.find(r => auth?.roles?.map(r => r.toLowerCase()).includes(r.toLowerCase()))).map(x => {
       if(x.children && x.children.length > 0) {
         x.children = this.getItemsByRoles(x.children, auth);
         return x;
@@ -42,7 +42,7 @@ export class SideNavTechteecComponent extends Unsubscriber {
         return x
       }
     })
-    
+
   }
   logOut() {
     this._otherSubscription = this.confirm.open({Title: 'Logout', Message: 'Are you sure you want to logout', MatColor: 'warn'}).pipe(
@@ -53,6 +53,6 @@ export class SideNavTechteecComponent extends Unsubscriber {
     ).subscribe(x => {
         this.router.navigateByUrl('/login');
     });
-    
+
  }
 }
