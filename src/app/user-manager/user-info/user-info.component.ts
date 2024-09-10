@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { catchError, filter, map, switchMap, tap } from 'rxjs';
 import { UserManagerService } from '../user-manager.service';
 import { LocaleDatePipe } from '../../app-reusables/common/locale-date.pipe';
 import { DataTableComponent } from "../../app-reusables/data-table/data-table.component";
@@ -59,6 +59,7 @@ export class UserInfoComponent extends Unsubscriber{
   private confirm = inject(ConfirmService);
   private dialog = inject(MatDialog);
   private account = inject(AccountService);
+  updateCalling = false
   canChange = this.account.inRoles(['Membership Manager','Super User'])
   canSendNotifications = this.account.inRoles(['Super User', 'Notification Manager'])
   transactionData: any[] = [];
@@ -84,7 +85,7 @@ export class UserInfoComponent extends Unsubscriber{
   isActive = false;
   isVerified = false;
   userActivating = this.mainService.loadingActivation$.pipe(map(x => x.length > 0));
-  
+
   transactionColumnDefs = this.deviceService.isHandset$.pipe(
     map((ishandset: boolean) => {
         if(ishandset) {
@@ -164,7 +165,7 @@ export class UserInfoComponent extends Unsubscriber{
             this.membershipDataSize = ds.dataSize;
         })
   }
-  
+
   membershipDownload(filter: DataTableOutput) {
     const dd = Date.now();
     this._otherSubscription = this.membershipService.exportMembershipHistoryByFilter({...filter as MembershipHistoryFilterModel, UserId: this.userId}).subscribe(x => {
@@ -238,7 +239,7 @@ export class UserInfoComponent extends Unsubscriber{
     const url = this.router.serializeUrl(
       this.router.createUrlTree([`/posts/${post.postId}`])
     );
-  
+
     window.open(url, '_blank');
   }
   postMenuBtnClicked(object: {index: number, obj: Post, objIndex: number}) {
@@ -293,6 +294,11 @@ export class UserInfoComponent extends Unsubscriber{
         this.isVerified = false;
       }
     })
+  }
+
+  updateCallingNumber(value: string) {
+    this.mainService.changeCallingNumber(this.userId, value).subscribe();
+    this.updateCalling = false;
   }
 
 }

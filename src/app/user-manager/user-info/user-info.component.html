@@ -182,7 +182,16 @@
                     <mat-label>
                         Calling Number
                     </mat-label>
-                    <input matInput [value]="user.callingNumber" readonly>
+                    <input matInput [value]="user.callingNumber" #callingNumber [readonly]="!updateCalling">
+                    <button mat-icon-button matSuffix *ngIf="!updateCalling" (click)="updateCalling = true">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button matSuffix *ngIf="updateCalling" (click)="updateCallingNumber(callingNumber.value)" color="primary">
+                      <mat-icon>check</mat-icon>
+                    </button>
+                    <button mat-icon-button matSuffix *ngIf="updateCalling" (click)="callingNumber.value = user.callingNumber; updateCalling = false">
+                      <mat-icon>close</mat-icon>
+                    </button>
                 </mat-form-field>
             </mat-grid-tile>
         </mat-grid-list>

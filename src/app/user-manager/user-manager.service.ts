@@ -44,6 +44,10 @@ export class UserManagerService {
   get loadingVerify$(): Observable<boolean> {
     return this.loadingVerify.asObservable();
   }
+  private loadingChangeCalling = new BehaviorSubject<boolean>(false);
+  get loadingChangeCalling$(): Observable<boolean> {
+    return this.loadingChangeCalling.asObservable();
+  }
 
   constructor() { }
   getUsersByFilter(filter: UserFilterModel): Observable<DataWithSize> {
@@ -112,5 +116,11 @@ export class UserManagerService {
       })
     )
   }
-  
+  changeCallingNumber(userId: string, callingMobileNumber: string): Observable<any> {
+    this.loadingChangeCalling.next(true);
+    return this.http.get<any>(this.url + `/changeCallingNumber?userId=${userId}&callingNumber=${callingMobileNumber}`).pipe(
+      finalize(() => this.loadingChangeCalling.next(false))
+    )
+  }
+
 }
