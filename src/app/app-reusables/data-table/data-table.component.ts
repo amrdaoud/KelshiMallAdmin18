@@ -85,7 +85,7 @@ export class DataTableComponent extends Unsubscriber implements OnInit, AfterVie
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild('sbmtBtn') sbmtBtn!: ElementRef;
   filterForm = new FormGroup({});
-  searchControl = new FormControl('');
+  searchControl = new FormControl('', {updateOn: 'blur'});
   takeUntil = new BehaviorSubject<string>('stop');
   @Input() haveDownload = false;
   @Input() isDownloading: boolean | null = false;
@@ -99,7 +99,7 @@ export class DataTableComponent extends Unsubscriber implements OnInit, AfterVie
   @Output() downloadClicked = new EventEmitter<DataTableOutput>();
   selection = new SelectionModel<any>(true, []);
   ngOnChanges(changes: SimpleChanges): void {
-    
+
     if (changes['data']) {
       this.dataSource.data = this.data;
       this.selection.clear();
@@ -177,7 +177,7 @@ export class DataTableComponent extends Unsubscriber implements OnInit, AfterVie
       else if(element.Type === 'date') {
         frm.addControl(element.ControlName, new FormControl('', { updateOn: element.UpdateOn , validators: element.IsMandatory ? Validators.required : []}));
       }
-      
+
       else if(element.Type ==='slider') {
         frm.addControl(element.ControlName, new FormControl('', { updateOn: element.UpdateOn , validators: element.IsMandatory ? Validators.required : []}));
         frm.addControl(element.ControlName2!, new FormControl('', { updateOn: element.UpdateOn , validators: element.IsMandatory ? Validators.required : []}));
@@ -252,7 +252,7 @@ export class DataTableComponent extends Unsubscriber implements OnInit, AfterVie
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.selection.clear();
-      
+
       return;
     }
 
