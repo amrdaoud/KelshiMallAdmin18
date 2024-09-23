@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './app-reusables/common/auth.guard';
 import { UnauthorizedComponent } from './app-reusables/redirects/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './app-reusables/redirects/not-found/not-found.component';
+import { ChatTestComponent } from './chat-test/chat-test.component';
 
 export const routes: Routes = [
     {path:'', loadComponent:() => import('./side-nav-techteec/side-nav-techteec.component').then(c => c.SideNavTechteecComponent), canActivate:[authGuard], children: [
@@ -34,5 +35,6 @@ export const routes: Routes = [
     {path:'login', loadComponent:() => import('./app-reusables/account/components/login/login.component').then(c => c.LoginComponent)},
     {path:'change-password', loadComponent:() => import('./app-reusables/account/components/change-password/change-password.component').then(c => c.ChangePasswordComponent)},
     {path:'403', component: UnauthorizedComponent},
+    {path: 'chat', component: ChatTestComponent},
     {path: '**', component: NotFoundComponent}
 ];

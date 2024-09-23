@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^18.2.2",
     "@angular/platform-browser-dynamic": "^18.2.2",
     "@angular/router": "^18.2.2",
+    "@microsoft/signalr": "^8.0.7",
     "@types/google.maps": "^3.55.3",
     "angularx-qrcode": "^18.0.1",
     "firebase": "^10.8.0",

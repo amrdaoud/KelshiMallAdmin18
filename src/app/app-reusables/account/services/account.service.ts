@@ -2,9 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../validators/validators.service';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, finalize, tap } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, map, switchMap, tap } from 'rxjs';
 import { AuthenticationModel, ChangePasswordModel, LoginModel, RegisterModel } from '../models/account';
 import { environment } from '../../../../environments/environment';
+import { ChatService } from '../../../chat/chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AccountService {
   private validatorsService = inject(ValidatorsService);
   private accountUrl = environment.apiUrl + 'accounts/'
   private http = inject(HttpClient);
+  private chatService = inject(ChatService);
   private account = new BehaviorSubject<AuthenticationModel | null>(null);
 
   private loadingLogin = new BehaviorSubject<boolean>(false);
@@ -97,6 +99,8 @@ export class AccountService {
     this.loadingLogin.next(true);
     return this.http.post<AuthenticationModel>(this.accountUrl + 'login', model).pipe(
       tap(x => { if(x) {x.tokenDurationM = 300; this.storeAuth(x); this.account.next(x); }}),
+      switchMap(x => this.chatService.start(x.token)),
+      map(z => this.account.value!),
       finalize(() => this.loadingLogin.next(false))
     )
   }
