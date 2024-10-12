@@ -15,6 +15,7 @@
             <app-select [options]="routeOptions" label="Route to" controlName="route" optionValue="Value" optionDisplay2="Name" [formGroup]="dataForm"></app-select>
             <app-input [formGroup]="dataForm" label="Post Id" controlName="postId" type="number"></app-input>
             <app-input [formGroup]="dataForm" label="Store Id" controlName="storeId" type="number"></app-input>
+            <app-select [options]="paidServiceOptions" label="Service Type" controlName="paidServiceType" optionValue="Value" optionDisplay2="Name" [formGroup]="dataForm"></app-select>
             <mat-checkbox formControlName="isMyPost" style="margin-left: 6px;">My Post?</mat-checkbox>
         </div>
     </mat-grid-tile>

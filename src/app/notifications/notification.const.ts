@@ -114,5 +114,6 @@ export const routeOptions = [
     {Name: 'Membership', Value: '/membershipScreen'},
     {Name: 'Features', Value: '/viewAllFeaturedAdsScreen'},
     {Name: 'Wallet', Value: '/wallet'},
-    {Name: 'Paid Services', Value: '/paidServices'}
+    {Name: 'Paid Services', Value: '/paidServices'},
+    {Name: 'My Posts', Value: '/myPostsScreen'},
 ]

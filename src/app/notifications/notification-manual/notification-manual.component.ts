@@ -1,9 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputComponent } from '../../app-reusables/controls/input/input.component';
 import { SelectComponent } from '../../app-reusables/controls/select/select.component';
@@ -35,6 +32,7 @@ export class NotificationManualComponent extends Unsubscriber implements OnInit 
     this.routeBody = queryParams.get('body') || '';
     this.routePostId = queryParams.get('postId');
     this.routeStoreId = queryParams.get('storeId');
+    this.routePaidServiceType = queryParams.get('paidServiceType') || '';
     this.routeRoute = queryParams.get('route') ? '/' + queryParams.get('route') : '/';
     this.routeMyPost = queryParams.get('myPost') === 'true';
     this.routeUserId = queryParams.getAll('userId') ?  queryParams.getAll('userId').join('\n') : '';
@@ -46,6 +44,7 @@ export class NotificationManualComponent extends Unsubscriber implements OnInit 
     this.frm.get('Data')?.get('storeId')?.setValue(this.routeStoreId);
     this.frm.get('Data')?.get('route')?.setValue(this.routeRoute);
     this.frm.get('Data')?.get('isMyPost')?.setValue(this.routeMyPost);
+    this.frm.get('Data')?.get('paidServiceType')?.setValue(this.routePaidServiceType);
 
     if(this.routeIsAll) {
         this.frm.get('UserIds')?.setValue(['Sending to all users']);
@@ -69,10 +68,12 @@ export class NotificationManualComponent extends Unsubscriber implements OnInit 
   private routeRoute: string = '/';
   private routeMyPost = false;
   private routeUserId: string = '';
+  private routePaidServiceType: string = '';
   // routeExUserId: string[] = [];
   isHandset$ = this.deviceService.isHandset$;
   loadingSendNotifications$ = this.notificationService.loadingSendNotifications$;
   routeOptions = routeOptions;
+  paidServiceOptions = [{Name: "All", Value: "All"}, {Name: "Feature", Value: "Feature"}, {Name: "Repost", Value: "Repost"}]
   frm = new FormGroup<any>({
     UserIds: new FormControl('', Validators.required),
     Title: new FormControl('', Validators.required),
@@ -83,6 +84,7 @@ export class NotificationManualComponent extends Unsubscriber implements OnInit 
       postId: new FormControl(),
       storeId: new FormControl(),
       isMyPost: new FormControl(false),
+      paidServiceType: new FormControl("All"),
       date: new FormControl('')
     })
   })
@@ -106,6 +108,7 @@ export class NotificationManualComponent extends Unsubscriber implements OnInit 
     this.frm.get('Data')?.get('storeId')?.setValue(this.routeStoreId);
     this.frm.get('Data')?.get('route')?.setValue(this.routeRoute);
     this.frm.get('Data')?.get('isMyPost')?.setValue(this.routeMyPost);
+    this.frm.get('Data')?.get('paidServiceType')?.setValue(this.routePaidServiceType);
 
     if(this.routeIsAll) {
         this.frm.get('UserIds')?.setValue('Sending to all users');
