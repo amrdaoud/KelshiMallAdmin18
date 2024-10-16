@@ -6,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DeviceService } from '../../app-reusables/services/device.service';
 import { StepProgressBarComponent } from "../../app-reusables/components/step-progress-bar/step-progress-bar.component";
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { OrderStatusModel, OrderViewModel } from '../order';
 import { OrderService } from '../order.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,9 +36,11 @@ export class OrderDetailsComponent {
   private confirm = inject(ConfirmService);
   private dialog = inject(MatDialog);
   private account = inject(AccountService);
+  private router = inject(Router);
   selectedStatus: OrderStatusModel | undefined;
   statuses$ = this.orderService.getStatuses();
   isDeliveryManager = this.account.inRoles(['Super User', 'Delivery Manager']);
+  isPostManager = this.account.inRoles(['Super User', 'Post Manager']);
   loadingOrder$ = this.orderService.loadingOrder$;
   changingStatus$ = this.orderService.changingStatus$;
   order!: OrderViewModel;
@@ -98,5 +100,12 @@ export class OrderDetailsComponent {
         this.order = x;
       }
     })
+  }
+  showOnMap(lat: number, lon: number) {
+    window.open(`https://maps.google.com/?q=${lat},${lon}`, "_blank");
+  }
+  goToPost(postId: number) {
+    if(this.isPostManager)
+    this.router.navigateByUrl(`/posts/${postId}`);
   }
 }

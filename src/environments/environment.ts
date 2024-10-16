@@ -1,6 +1,6 @@
 export const environment = {
-    apiUrl: 'https://localhost:7162/apiAdmin/',
-    // apiUrl: 'https://api.kelshimall.com:7738/apiAdmin/',
+    // apiUrl: 'https://localhost:7162/apiAdmin/',
+    apiUrl: 'https://api.kelshimall.com:7738/apiAdmin/',
     production: false,
     test: false,
     baseHref: '/',

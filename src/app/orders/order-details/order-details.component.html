@@ -33,11 +33,12 @@
         </div>
         <mat-card-header>
           <mat-card-title>
-            (A) Pickup Information
+            (A) Pickup Information <button mat-button color="primary" (click)="showOnMap(order.sellerLat, order.sellerLon)">Show on map</button>
           </mat-card-title>
         </mat-card-header>
         <div class="info-card-content">
-          <div class="product-image">
+          <div class="product-image" [ngClass]="isPostManager ? 'clickable' : ''"
+          (click)="goToPost(order.postId)">
             <img [src]="order.postImage">
             <div style="text-align: center;">{{order.postName}}</div>
             <div style="text-align: center; font-size: 12px; color: red; font-weight: bold;">{{order.postPrice |
@@ -121,7 +122,7 @@
         </div>
         <mat-card-header>
           <mat-card-title>
-            (B) Delivery Information
+            (B) Delivery Information <button mat-button color="primary" (click)="showOnMap(order.buyerLat, order.buyerLon)">Show on map</button>
           </mat-card-title>
         </mat-card-header>
         <div class="info-card-content">
