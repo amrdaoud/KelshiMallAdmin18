@@ -18,6 +18,9 @@
   <h5 class="mat-h5" style="width:100%; text-align: center; color: #888;margin-top: 0px;">
     <span *ngIf="order">{{order.direction}} by {{order.methodName}}</span>
   </h5>
+  <h5 class="mat-h5" style="width:100%; text-align: center; color: red;margin-top: 0px;" *ngIf="order.orderNote">
+    <span *ngIf="order">Order Note: {{order.orderNote}}</span>
+  </h5>
   <mat-grid-list cols="1" rowHeight="200">
     <mat-grid-tile>
       <div class="full-page-card">

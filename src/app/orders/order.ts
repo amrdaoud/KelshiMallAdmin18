@@ -73,6 +73,7 @@ export interface OrderViewModel {
     sellerNote: string | null;
     statusHistory: OrderStatusHistoryModel[];
     statusId: number;
+    orderNote: string | null;
 }
 
 export interface OrderStatusModel {
