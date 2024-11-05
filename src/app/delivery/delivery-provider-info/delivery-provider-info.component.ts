@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DeliveryService } from '../delivery.service';
-import { filter, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { filter, of, switchMap, tap } from 'rxjs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -22,7 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ConfirmService } from '../../app-reusables/confirm/services/confirm.service';
 import { AccountService } from '../../app-reusables/account/services/account.service';
-
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 interface ExampleFlatNode { 
   expandable: boolean; 
   name: string; 
@@ -34,14 +34,15 @@ interface ExampleFlatNode {
 @Component({
   selector: 'app-delivery-provider-info',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatCardModule, MatDividerModule, ReactiveFormsModule, InputComponent, MatButtonModule,
-    
+  imports: [CommonModule, MatGridListModule,
+    MatCardModule, MatDividerModule, ReactiveFormsModule,
+    InputComponent, MatButtonModule,
+    MatSlideToggle,
     MatProgressBarModule, MatIconModule, MatCheckboxModule, MatExpansionModule, MatListModule, MatToolbarModule],
   templateUrl: './delivery-provider-info.component.html',
   styleUrls: ['./delivery-provider-info.component.scss']
 })
 export class DeliveryProviderInfoComponent {
-
   constructor(){
     this.route.paramMap.pipe(
       switchMap((param: ParamMap) => {
@@ -234,6 +235,17 @@ export class DeliveryProviderInfoComponent {
       if(x) {
         this.snackBar.open('Provider Deleted', 'Dismiss', {duration: 2000})
         this.router.navigateByUrl('/delivery-providers')
+      }
+    })
+  }
+  autoFillUser() {
+    this.deliveryService.currentUser.subscribe(x => {
+      if (x) {
+        this.frm.get('address')?.setValue(x?.city + '-' + x?.area);
+        this.frm.get('name')?.setValue(x?.storeName);
+        this.frm.get('mobileNumber')?.setValue(x?.callingNumber ?? x?.mobileNumber);
+        //this.frm.get('logoUrl')?.setValue(x?.profilePicture);
+        this.iconSource = x?.profilePicture ?? '';
       }
     })
   }

@@ -1,17 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, filter, finalize, map, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { DeliveryFeeViewModel, DeliveryMethodModel, DeliveryProviderBindingModel, DeliveryProviderCoverageBindingModel, DeliveryProviderFeeBindingModel, DeliveryProviderFilterModel, DeliveryProviderViewModel } from './delivery';
+import { DeliveryMethodModel, DeliveryProviderBindingModel, DeliveryProviderCoverageBindingModel, DeliveryProviderFeeBindingModel, DeliveryProviderFilterModel, DeliveryProviderViewModel } from './delivery';
 import { DataWithSize } from '../app-reusables/data-table/data-table.models';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { convertJsontoFormData } from '../app-reusables/helpers';
+import { UserManagerService } from '../user-manager/user-manager.service';
+import { UserListViewModel } from '../user-manager/user-manager';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeliveryService {
-  
+  private userManagerService = inject(UserManagerService);
+  private currentUser$ = new BehaviorSubject<UserListViewModel | null>(null);
+  get currentUser(): Observable<UserListViewModel | null> {
+    return this.currentUser$.pipe(
+      filter(x => x != null)
+    );
+  }
   createProviderForm(provider?: DeliveryProviderViewModel): FormGroup {
     let frm = new FormGroup({
       deliveryProviderId: new FormControl(provider?.deliveryProviderId ?? 0),
@@ -19,7 +27,13 @@ export class DeliveryService {
       logoFile: new FormControl(null),
       mobileNumber: new FormControl(provider?.mobileNumber, Validators.required),
       name: new FormControl(provider?.name, Validators.required),
-      logoUrl: new FormControl(provider?.logo)
+      logoUrl: new FormControl(provider?.logo),
+      userId: new FormControl(provider?.userId, {
+        asyncValidators: this.validateUserId(provider?.userId),
+        updateOn: 'blur'
+      }),
+      isDeliveryProvider: new FormControl(provider?.isDeliveryProvider ?? true, Validators.required),
+      minimumFees: new FormControl(provider?.minimumFees ?? 0, Validators.required)
     });
     return frm;
   }
@@ -134,6 +148,22 @@ export class DeliveryService {
     return this.http.get<boolean>(this.deliveryUrl + '/deactivateprovider?id=' + id).pipe(
       finalize(() => this.activatingProvider.next(false))
     )
+  }
+  validateUserId(current?: string): AsyncValidatorFn {
+    return (control: AbstractControl) => {
+      this.currentUser$.next(null);
+      if(!control.value) {
+        return of(null);
+      }
+      if(current?.toString()?.toLowerCase() === control?.value?.toString().toLowerCase()) {
+        return of(null);
+      }
+      return this.userManagerService.getUsersByFilter({PageIndex:0,PageSize:1,UserId:control.value ?? '0', SortActive: 'UserId', SortDirection: 'asc'}).pipe(
+        tap(res => res && res.dataSize > 0 ? this.currentUser$.next(res.data[0]) : ''),
+        map(res => res && res.dataSize === 0 ? {notAvailable: true} : null),
+        catchError(() => of({connection: true}))
+      );
+    }
   }
   
 }

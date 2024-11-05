@@ -18,8 +18,20 @@
                 <mat-grid-tile>
                     <app-input controlName="address" [formGroup]="frm" label="Provider Address"></app-input>
                 </mat-grid-tile>
+                <mat-grid-tile>
+                    <app-input controlName="minimumFees" type="number" [formGroup]="frm" label="Minimum Fees"></app-input>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <app-input controlName="userId" [isAsync]="true" [formGroup]="frm" label="Linked User Id"></app-input>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-slide-toggle formControlName="isDeliveryProvider">Can Deliver for others</mat-slide-toggle>
+                </mat-grid-tile>
                 <mat-grid-tile [colspan]="(isHandset$ | async) ? 1 : 3" class="provider-info-actions">
-                    <button mat-raised-button color="primary" [disabled]="frm.invalid || frm.pristine">Save Main
+                    <button mat-stroked-button type="button" (click)="autoFillUser()"
+                    color="accent" [disabled]="frm.get('userId')?.invalid || frm.pristine || frm.pending">
+                        Auto Fill</button>
+                    <button mat-raised-button color="primary" [disabled]="frm.invalid || frm.pristine || frm.pending">Save Main
                         Info</button>
                     <button mat-raised-button type="button" (click)="reset()">Reset</button>
                 </mat-grid-tile>

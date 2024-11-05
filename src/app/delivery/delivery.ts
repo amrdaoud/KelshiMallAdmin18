@@ -33,6 +33,9 @@ export interface DeliveryProviderViewModel {
     coverages: DeliveryProviderCoverageViewModel[];
     fees: DeliveryFeeViewModel[];
     isActive: boolean;
+    userId?: string;
+    isDeliveryProvider: boolean;
+    minimumFees: number;
 }
 
 export interface DeliveryProviderBindingModel {

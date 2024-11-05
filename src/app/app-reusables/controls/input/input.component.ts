@@ -67,6 +67,7 @@ export class InputComponent implements OnInit, AfterViewInit {
       if (keyError === 'notGreater') errorMessage += `Must be greater than  ${this.matchLabel}`;
       if (keyError === 'notLess') errorMessage += `Must be less than  ${this.matchLabel}`;
       if (keyError === 'password') errorMessage += `At least 6 characters, at least one digit, one upper & one lower case!`;
+      if (keyError === 'notAvailable') errorMessage += `Cannot find user!`;
     })
     return errorMessage;
   }
