@@ -249,6 +249,14 @@
                 </div>
             </mat-grid-tile>
         </mat-grid-list>
+        <mat-grid-list rowHeight="260" cols="1">
+            <mat-grid-tile>
+                <div class="qrCode-container">
+                    <qrcode [qrdata]="user.fullLink" elementType="img" [width]="8" [scale]="8" [errorCorrectionLevel]="'M'">
+                    </qrcode>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
         <mat-grid-list rowHeight="90" [cols]="1" class="bottom-buttons">
             <mat-grid-tile *ngIf="!(userActivating | async); else activating">
                 <button *ngIf="isActive" mat-raised-button color="warn" (click)="deactivateUser()">Deactivate

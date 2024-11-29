@@ -34,6 +34,7 @@ import { SmsDialogComponent } from '../sms-dialog/sms-dialog.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { userAddressConst } from '../user-manager.const';
 import { AddressFilterModel, UserAddressListViewModel } from '../user-manager';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
     selector: 'app-user-info',
@@ -43,7 +44,8 @@ import { AddressFilterModel, UserAddressListViewModel } from '../user-manager';
     imports: [CommonModule, MatGridListModule, MatCardModule,
       MatFormFieldModule, MatInputModule, LocaleDatePipe,
       DataTableComponent, MatIconModule, MatButtonModule,
-      MatProgressSpinnerModule,NgImageSliderModule, MatDividerModule, MatMenuModule],
+      MatProgressSpinnerModule,NgImageSliderModule,
+      MatDividerModule, MatMenuModule,QRCodeModule],
     providers: [LocaleDatePipe, CurrencyPipe]
 })
 export class UserInfoComponent extends Unsubscriber{
