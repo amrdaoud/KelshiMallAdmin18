@@ -10,6 +10,7 @@ export const postListColumns: ColumnDef[] = [
     {Name: "Title", Property: "title", IsSort: true, Tooltip: "Description"},
 
     {Name: "Price", Property: "price", IsSort: true, Pipe: CurrencyPipe},
+    {Name: "Currency", Property: "currency", IsSort: true},
     {Name: "Store", Property: "storeName", IsSort: true},
     {Name: "Mobile", Property: "mobileNumber"},
     {Name: "Changed By", Property: "lastActivatedBy", IsSort: true},

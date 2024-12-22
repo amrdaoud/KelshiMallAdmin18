@@ -99,6 +99,7 @@ export class PostFormComponent extends Unsubscriber {
   paidServiceLoadingActivation$ = this.paidServiceService.loadingActivation$;
   paidServiceLoading$ = this.paidServiceService.loadingList$;
   lastPaidServiceFilter!: DataTableOutput;
+  currencies = [{name:'SYP', value: 'SYP'}, {name:'$',value: 'USD'}];
   paidServiceHistoryColumnDefs = this.deviceService.isHandset$.pipe(
     map((ishandset: boolean) => {
         if(ishandset) {
@@ -218,6 +219,16 @@ export class PostFormComponent extends Unsubscriber {
     ).subscribe(x => {
       if(x) {
         this.snackBar.open('Post Description updated with ' + x.description,'Dismiss', {duration: 2000, verticalPosition:'top'})
+      }
+    })
+    ),
+    tap(x => x.get('Currency')?.valueChanges.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(val => this.postService.changePostCurrency(this.post.postId, val))
+    ).subscribe(x => {
+      if(x) {
+        this.snackBar.open('Post Currency updated with ' + x.currency,'Dismiss', {duration: 2000, verticalPosition:'top'})
       }
     })
     )

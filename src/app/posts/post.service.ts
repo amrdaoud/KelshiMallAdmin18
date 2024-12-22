@@ -76,13 +76,15 @@ export class PostService {
       Area: new FormControl(post?.area, Validators.required),
       City: new FormControl(post?.city, Validators.required),
       PostData: this.createPostDataFormArray(fields, post),
-      StatusReason: new FormControl(post?.statusReason)
+      StatusReason: new FormControl(post?.statusReason),
+      Currency: new FormControl(post?.currency)
     });
     frm.disable();
     frm.get('PostId')?.enable();
     frm.get('Title')?.enable();
     frm.get('Description')?.enable();
     frm.get('Price')?.enable();
+    frm.get('Currency')?.enable();
     // frm.get('Status')?.enable();
     // frm.get('StatusReason')?.enable();
     return frm;
@@ -142,6 +144,12 @@ export class PostService {
   changePostPrice(postId: number, newPrice: number): Observable<{price: number}> {
     this.loadingTitle.next(true);
     return this.http.get<{price: number}>(this.postsUrl + `/changePrice?postId=${postId}&newPrice=${newPrice}`).pipe(
+      finalize(() => this.loadingTitle.next(false))
+    )
+  }
+  changePostCurrency(postId: number, newCurrency: string): Observable<{currency: string}> {
+    this.loadingTitle.next(true);
+    return this.http.get<{currency: string}>(this.postsUrl + `/changeCurrency?postId=${postId}&currency=${newCurrency}`).pipe(
       finalize(() => this.loadingTitle.next(false))
     )
   }

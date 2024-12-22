@@ -24,7 +24,8 @@ export interface PostListViewModel {
 	statusReason: string;
 	lastActivatedBy: string;
 	haveDelivery: boolean;
-	totalOrders: number
+	totalOrders: number;
+	currency: string;
 }
 
 export interface PostFilterModel {
@@ -69,6 +70,7 @@ export interface Post {
 	dynamicStatus?: string;
 	isReposted: boolean;
 	postShipment: PostShipmentViewModel | null;
+	currency: string;
 }
 export interface PostShipmentViewModel {
     postShipmentId: number;
@@ -134,6 +136,7 @@ export interface PostPriceLogViewModel {
     systemUserId: string | null;
     systemUserName: string | null;
 	price: number;
+	currency: string;
 }
 
 

@@ -41,8 +41,12 @@
                     <app-input [controlName]="'PostingDate'" [formGroup]="frm" type="date" label="Date"></app-input>
                 </mat-grid-tile>
                 <mat-grid-tile>
-                        <div style="width:80%">
+                        <div style="width:40%">
                             <app-input [controlName]="'Price'" [formGroup]="frm"  label="Price" type="currency"></app-input>
+                        </div>
+                        <div style="width:40%">
+                            <app-select [controlName]="'Currency'"
+                            [formGroup]="frm" [options]="currencies" label="$/SYP" optionDisplay="name" optionValue="value"></app-select>
                         </div>
                         <div style="width:20%">
                             <button mat-icon-button (click)="getPriceLog()" color="primary" [mat-menu-trigger-for]="priceMenu"><mat-icon>history</mat-icon></button>
@@ -196,11 +200,14 @@
         <mat-list>
             <mat-list-item  *ngFor="let p of postPriceLog">
                 <div class="price-list">
-                    <div style="width:150px">
-                        {{p.logDate | date : 'MMM dd, y, hh:mm a'}}
+                    <div style="width:100px">
+                        {{p.logDate | date : 'MMM dd, y'}}
                     </div>
                     <div style="width:150px; font-weight: bold;">
                         {{p.price | number}}
+                    </div>
+                    <div style="width:50px">
+                        {{p.currency}}
                     </div>
                     <div style="width:150px">
                         {{p.systemUserName ?? 'Creator'}}

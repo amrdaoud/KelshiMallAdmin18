@@ -57,4 +57,11 @@ export class MembershipService {
       finalize(() => this.loadingAddToUser.next(false))
     )
   }
+
+  extendMembershipToUser(userId: string, days: number): Observable<boolean> {
+    this.loadingAddToUser.next(true);
+    return this.http.get<boolean>(this.url + `/extendmembership?userId=${userId}&days=${days}`).pipe(
+      finalize(() => this.loadingAddToUser.next(false))
+    )
+  }
 }

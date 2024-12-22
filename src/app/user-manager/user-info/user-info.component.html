@@ -194,6 +194,22 @@
                     </button>
                 </mat-form-field>
             </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="full-width">
+                    <mat-label>
+                        Facebook
+                    </mat-label>
+                    <input matInput [value]="user.facebookLink" readonly>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="full-width">
+                    <mat-label>
+                        Instagram
+                    </mat-label>
+                    <input matInput [value]="user.instagramLink" readonly>
+                </mat-form-field>
+            </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list rowHeight="500" cols="1" style="margin-left: -20px">
             <mat-grid-tile>

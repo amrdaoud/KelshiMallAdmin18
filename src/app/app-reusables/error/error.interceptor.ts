@@ -5,6 +5,9 @@ import { ErrorService } from './error.service';
 
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  if(req.url.toLowerCase().includes('extendmembership')) {
+    return next(req);
+  }
   return next(req).pipe(
     catchError((error) => {
         if(error.status === 0) {

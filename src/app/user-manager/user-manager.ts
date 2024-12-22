@@ -36,6 +36,8 @@ export interface UserListViewModel {
     storeId: number;
     lastOtp: string | null;
     callingNumber: string | null;
+    instagramLink: string;
+    facebookLink: string;
 }
 export interface SendSmsModel {
     MobileNumbers: string[];

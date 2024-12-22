@@ -35,6 +35,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { userAddressConst } from '../user-manager.const';
 import { AddressFilterModel, UserAddressListViewModel } from '../user-manager';
 import { QRCodeModule } from 'angularx-qrcode';
+import { MembershipExtendComponent } from '../membership-extend/membership-extend.component';
 
 @Component({
     selector: 'app-user-info',
@@ -70,7 +71,8 @@ export class UserInfoComponent extends Unsubscriber{
   membershipDataSize!: number;
   membershipFilter!: DataTableOutput;
   membershipBtns: DataTableButtonObject[] = [
-    {Text: 'Change Membership', Icon: 'card_membership', MatColor: 'primary'}
+    {Text: 'Change Membership', Icon: 'card_membership', MatColor: 'primary'},
+    {Text: 'Extend Membership', Icon: 'card_membership', MatColor: 'accent'}
   ]
   postData: any[] = [];
   postDataSize!: number;
@@ -255,6 +257,13 @@ export class UserInfoComponent extends Unsubscriber{
   membershipBtnClicked(index: number) {
     if(index == 0) {
       this.dialog.open(MembershipAddComponent, {data: this.userId}).afterClosed().subscribe(result => {
+        if(result) {
+          this.membershipTableChange(this.membershipFilter);
+        }
+      })
+    }
+    if(index == 1) {
+      this.dialog.open(MembershipExtendComponent, {data: this.userId, width: '300px'}).afterClosed().subscribe(result => {
         if(result) {
           this.membershipTableChange(this.membershipFilter);
         }
