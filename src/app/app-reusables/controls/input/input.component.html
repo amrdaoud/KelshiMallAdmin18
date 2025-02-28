@@ -1,4 +1,4 @@
-<mat-form-field *ngIf="type === 'text-area'; else currencyControl" floatLabel="always">
+<mat-form-field *ngIf="type === 'text-area'; else currencyControl" floatLabel="always" subscriptSizing="dynamic">
     <mat-label>
         {{label}}
     </mat-label>
@@ -17,7 +17,7 @@
     </mat-error>
 </mat-form-field>
 <ng-template #currencyControl>
-    <mat-form-field *ngIf="type === 'currency'; else inputControl" floatLabel="always">
+    <mat-form-field *ngIf="type === 'currency'; else inputControl" floatLabel="always" subscriptSizing="dynamic">
         <mat-icon *ngIf="prefixIcon" matPrefix class="mat-prefix-icon">
             {{prefixIcon}}
         </mat-icon>
@@ -38,7 +38,7 @@
     </mat-form-field>
 </ng-template>
 <ng-template #inputControl>
-    <mat-form-field *ngIf="type !== 'date'; else dateControl" floatLabel="always">
+    <mat-form-field *ngIf="type !== 'date'; else dateControl" floatLabel="always" subscriptSizing="dynamic">
         <mat-icon *ngIf="prefixIcon" matPrefix class="mat-prefix-icon">
             {{prefixIcon}}
         </mat-icon>
@@ -59,7 +59,7 @@
     </mat-form-field>
     
     <ng-template #dateControl>
-        <mat-form-field appearance="outline" floatLabel="always" style="padding: 0px 10px;">
+        <mat-form-field appearance="outline" floatLabel="always" style="padding: 0px 10px;" subscriptSizing="dynamic">
             <mat-label translate>{{label}}</mat-label>
             <input matInput [matDatepicker]="picker2" [placeholder]="placeHolder" [formControl]="formControl">
             <mat-icon matPrefix matDatepickerToggleIcon svgIcon="calendar-icon" style="stroke:#1b1b1b"></mat-icon>

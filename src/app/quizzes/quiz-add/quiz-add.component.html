@@ -1,0 +1,44 @@
+<mat-progress-bar *ngIf="(loadingQuiz$ | async)" mode="query"></mat-progress-bar>
+@if (frm) {
+    <mat-card class="main-page">
+        <div class="main-container">
+            <div class="provider-info-card-header">
+                <img class="provider-card-logo clickable" [src]="imageSource"
+                    onerror="this.onerror=null; this.src='assets/logo/delivery-service.png';" (click)="image.click()">
+                <input id="file-upload" #image type="file" name="fileUpload" accept=".png,.jpg,.jpeg"
+                    (change)="previewImage($event)" />
+            </div>
+            <mat-grid-list [cols]="(isHandset$ | async) ? 1 : 3" rowHeight="90">
+                <form [formGroup]="frm" (ngSubmit)="submitQuiz()">
+                    <mat-grid-tile>
+                        <app-input controlName="name" [formGroup]="frm" label="Quiz Name"></app-input>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <app-input controlName="description" [formGroup]="frm" label="Description"></app-input>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <app-select controlName="quizTypeId" [formGroup]="frm" label="Type" [options]="(quizTypes | async)!" [optionValue]="'quizTypeId'" [optionDisplay]="'name'"></app-select>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <app-input [type]="'date'" [controlName]="'startDate'" [formGroup]="frm" label="Start Date"></app-input>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <app-input [type]="'date'" [controlName]="'endDate'" [formGroup]="frm" label="End Date"></app-input>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <app-input [controlName]="'prizeMessage'" [formGroup]="frm" label="Prize Message"></app-input>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <app-input [controlName]="'link'" [formGroup]="frm" label="Link"></app-input>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="(isHandset$ | async) ? 1 : 3" class="provider-info-actions">
+                        <button mat-raised-button color="primary" [disabled]="frm.invalid || frm.pristine || frm.pending">Save Main
+                            Info</button>
+                        <button mat-raised-button type="button">Reset</button>
+                    </mat-grid-tile>
+                </form>
+            </mat-grid-list>
+        </div>
+    </mat-card>
+}
+

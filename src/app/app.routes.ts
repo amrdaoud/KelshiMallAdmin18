@@ -30,6 +30,12 @@ export const routes: Routes = [
         {path: 'orders/:id', loadComponent:() => import('./orders/order-details/order-details.component').then(c => c.OrderDetailsComponent)},
         {path: 'app-log', loadComponent:() => import('./app-log/app-log-list/app-log-list.component').then(c => c.AppLogListComponent), canActivate:[authGuard], data: {Roles: ['Super User', 'Application Developer']}},
         {path: 'banners', loadComponent:() => import('./banners/banner-list/banner-list.component').then(c => c.BannerListComponent), canActivate:[authGuard], data: {Roles: ['Super User']}},
+        {path: 'quizzes', pathMatch: 'full', redirectTo: 'quizzes/list'},
+        {path: 'quizzes/list', loadComponent:() => import('./quizzes/quiz-list/quiz-list.component').then(c => c.QuizListComponent), canActivate:[authGuard], data: {Roles: ['Super User', 'Quiz Manager']}},
+        {path: 'quizzes/add', loadComponent:() => import('./quizzes/quiz-add/quiz-add.component').then(c => c.QuizAddComponent), canActivate:[authGuard], data: {Roles: ['Super User', 'Quiz Manager']}},
+        {path: 'quizzes/info/:id', loadComponent:() => import('./quizzes/quiz-info/quiz-info.component').then(c => c.QuizInfoComponent), canActivate:[authGuard], data: {Roles: ['Super User', 'Quiz Manager']}},
+        {path: 'quizzes/participants', loadComponent:() => import('./quizzes/quiz-user-list/quiz-user-list.component').then(c => c.QuizUserListComponent), canActivate:[authGuard], data: {Roles: ['Super User', 'Quiz Manager']}},
+
     ]},
     {path:'login', loadComponent:() => import('./app-reusables/account/components/login/login.component').then(c => c.LoginComponent)},
     {path:'change-password', loadComponent:() => import('./app-reusables/account/components/change-password/change-password.component').then(c => c.ChangePasswordComponent)},

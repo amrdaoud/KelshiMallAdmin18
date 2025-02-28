@@ -1,4 +1,4 @@
-import { USERS_ICON, ENVELOP_ICON, SEND_ICON, POST_ICON, LIST_ICON, REPORT_ICON, CATEGORY_ICON, TRANSACTIONS_ICON, QR_ICON, ADMIN_ICON, SYSTEM_USER_ICON, BANNER_ICON, ANDROID_ICON, LOG_ICON, DELIVERY_ICON, ORDER_ICON } from "../../../app-icons";
+import { USERS_ICON, ENVELOP_ICON, SEND_ICON, POST_ICON, LIST_ICON, REPORT_ICON, CATEGORY_ICON, TRANSACTIONS_ICON, QR_ICON, ADMIN_ICON, SYSTEM_USER_ICON, BANNER_ICON, ANDROID_ICON, LOG_ICON, DELIVERY_ICON, ORDER_ICON, QUIZ_ICON } from "../../../app-icons";
 import { IconNavItemWithRoles } from "./side-nav-techteec";
 
 export const items: IconNavItemWithRoles[] = [
@@ -91,6 +91,25 @@ export const items: IconNavItemWithRoles[] = [
                 routerLink: 'orders',
                 roles: ['Super User', 'Delivery Manager']
             },
+        ]
+    },
+    {
+        title: "Quizzes",
+        svgIcon: QUIZ_ICON,
+        roles: ['Super User', 'Quiz Manager'],
+        children: [
+            {
+                title: 'Quizzes',
+                svgIcon: LIST_ICON,
+                routerLink: 'quizzes/list',
+                roles: ['Super User', 'Quiz Manager']
+            },
+            {
+                title: 'Participants',
+                svgIcon: USERS_ICON,
+                routerLink: 'quizzes/participants',
+                roles: ['Super User', 'Quiz Manager']
+            }
         ]
     },
     {

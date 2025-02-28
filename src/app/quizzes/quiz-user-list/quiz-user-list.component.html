@@ -1,0 +1,32 @@
+<mat-grid-list class="page-with-toolbar" rowHeight="fit" rows="1" cols="1">
+    <mat-grid-tile>
+        <app-data-table
+        title="Participants"
+        subtitle="Click to show info"
+        [data]="data"
+        [highlightProperty]="'membershipName'"
+        [highlightValue]="'Market'"
+        [dataSize]="dataSize"
+        [columnDefs]="(columnDefs | async)!"
+        [haveSearch]="true"
+        [isAsync]="true"
+        [pageSize]="30"
+        [menuBtns]="menuBtns"
+        [menuLoadingRows]="loadingMenu$ | async"
+        [filters]="filters"
+        [sortActive]="'actionDate'"
+        [sortDirection]="'desc'"
+        [isLoading]="isLoading$ | async"
+        [clickable]="true"
+        (changed)="tableChange($event)"
+        [showSubmit]="false"
+        [preserveQueryParams]="true"
+        [preserveSearchQuery]="true"
+        [isReport]="true"
+        [searchQueryPlaceHolder]="'Find by content or mobile'"
+        [haveDownload]="true"
+        [canOpenNewTab]="true"
+        (menuBtnClicked)="menuBtnClicked($event)"
+        ></app-data-table>
+    </mat-grid-tile>
+</mat-grid-list>

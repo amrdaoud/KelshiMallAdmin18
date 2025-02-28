@@ -20,10 +20,20 @@ export function convertJsontoFormData(jsonObject: any, parentKey?: string, carry
                         formData.append(propName + '[' + j + ']', jsonObject[key].item(j));
                     }
                 } else if (isArray(jsonObject[key]) || isObject(jsonObject[key])) {
-                    convertJsontoFormData(jsonObject[key], propName, formData);
+                    if (jsonObject[key] instanceof Date) {
+                        formData.append(propName, (jsonObject[key] as Date).toDateString());
+                    }
+                    else {
+                        convertJsontoFormData(jsonObject[key], propName, formData);
+                    }
+                    
                 } else if (typeof jsonObject[key] === 'boolean') {
                     formData.append(propName, +jsonObject[key] ? 'true': 'false');
-                }else {
+                }
+                else if(typeof jsonObject[key] === 'string' && !isNaN(Date.parse(jsonObject[key]))){
+                    formData.append(propName, (new Date(jsonObject[key])).toDateString());
+                }
+                else {
                     formData.append(propName, jsonObject[key]);
                 }
             }
@@ -40,3 +50,4 @@ function isArray(val: any) {
 function isObject(val: any) {
     return !isArray(val) && typeof val === 'object' && !!val;
 }
+
