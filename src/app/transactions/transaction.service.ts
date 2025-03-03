@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, finalize } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { GenerateRedeemModel, RedeemCodeFilterModel, RedeemCodeUsersModel, TransactionFilterModel } from './transactions';
+import { GenerateRedeemModel, RedeemCodeFilterModel, RedeemCodeUsersModel, TransactionBindingModel, TransactionFilterModel, TransactionListViewModel } from './transactions';
 import { DataWithSize } from '../app-reusables/data-table/data-table.models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -45,6 +45,11 @@ export class TransactionService {
     return this.loadingTransactionRow.asObservable();
   }
 
+  private loadingAddTransaction = new BehaviorSubject<boolean>(false);
+  get loadingAddTransaction$(): Observable<boolean> {
+    return this.loadingAddTransaction.asObservable();
+  }
+
   constructor() { }
   createRedeemForm(): FormGroup {
     let frm = new FormGroup({
@@ -53,6 +58,17 @@ export class TransactionService {
       ValidityValue: new FormControl('', Validators.required),
       Note: new FormControl(''),
       JournalDescription: new FormControl(''),
+    });
+    return frm;
+  }
+  createTransactionForm(userId: string, isToUser: boolean): FormGroup {
+    let frm = new FormGroup({
+      userId: new FormControl(userId, Validators.required),
+      isToUser: new FormControl(isToUser, Validators.required),
+      note: new FormControl(isToUser ? "هدية من كلشي مول" : "استرجاع الى كلشي مول"),
+      amount: new FormControl(0, Validators.required),
+      description: new FormControl("Added By Admin", Validators.required),
+      reference: new FormControl(Date.now().toString(), Validators.required)
     });
     return frm;
   }
@@ -120,5 +136,12 @@ export class TransactionService {
         this.loadingTransactionRow.next(this.loadingTransactionRow.value);
       })
     )
+  }
+  addTransaction(model: TransactionBindingModel): Observable<TransactionListViewModel> {
+    this.loadingAddTransaction.next(true);
+    return this.http.post<TransactionListViewModel>(this.url + '/add', model)
+    .pipe(
+      finalize(() => this.loadingAddTransaction.next(false))
+    );
   }
 }

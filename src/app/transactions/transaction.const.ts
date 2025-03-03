@@ -5,7 +5,10 @@ import { TransactionFilterModel } from "./transactions";
 import { of } from "rxjs";
 
 export const transactionConst :
-{columns: ColumnDef[], initialFilter?: TransactionFilterModel, filters?: DataTableFilter[], menuButtons?: DataTableButtonObject[], selectBtns?: DataTableButtonObject[]} = {
+{columns: ColumnDef[], initialFilter?: TransactionFilterModel,
+    filters?: DataTableFilter[],
+    menuButtons?: DataTableButtonObject[],
+    selectBtns?: DataTableButtonObject[]} = {
     columns: [
         {Name: "Credit", Property: "creditAccountName", Tooltip:"creditAccountNumber"},
         {Name: "Debit", Property: "debitAccountName", Tooltip:"debitAccountNumber"},
@@ -90,6 +93,18 @@ export const transactionConst :
         // }
     ],
 }
+export const transactionButtons: DataTableButtonObject[] = [
+    {
+        Text: 'Add Credit',
+        Icon: 'add',
+        MatColor: 'primary',
+    },
+    {
+        Text: 'Refund Credit',
+        Icon: 'remove',
+        MatColor: 'accent',
+    }
+]
 
 
 export const redeemConsts :

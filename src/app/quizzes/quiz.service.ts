@@ -54,14 +54,15 @@ export class QuizService {
      name: new FormControl(quiz?.name, Validators.required),
      description: new FormControl(quiz?.description),
      imageFile: new FormControl(null),
+     imageUrl: new FormControl(quiz?.imageUrl),
      quizTypeId: new FormControl(quiz?.quizTypeId, Validators.required),
      startDate: new FormControl(quiz?.startDate, Validators.required),
      endDate: new FormControl(quiz?.endDate, Validators.required),
      prizeMessage: new FormControl(quiz?.prizeMessage, Validators.required),
      link: new FormControl(quiz?.link),
-     seconds: new FormControl(quiz?.seconds),
+     seconds: new FormControl(quiz?.seconds ?? 0),
+     introMessage: new FormControl(quiz?.introMessage ?? '', Validators.required)
     });
-    console.log(frm);
     return frm;
   }
   createQuizQuestionForm(quiz: QuizViewModel): FormGroup {

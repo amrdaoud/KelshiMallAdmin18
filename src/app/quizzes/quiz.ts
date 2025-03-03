@@ -30,6 +30,7 @@ export interface QuizBindingModel {
     endDate: string;
     seconds: number;
     link: string | null;
+    introMessage: string | null;
 }
 
 export interface QuizViewModel {
@@ -45,6 +46,7 @@ export interface QuizViewModel {
     seconds: number;
     link: string | null;
     questions: QuizQuestionModel[];
+    introMessage: string | null;
 }
 
 export interface QuizListViewModel {
@@ -62,6 +64,7 @@ export interface QuizListViewModel {
     totalUsers: number;
     totalWinners: number;
     totalRefusers: number;
+    introMessage: string | null;
 }
 
 export interface AddQuestionssToQuizModel {

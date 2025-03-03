@@ -232,7 +232,8 @@
                     [isLoading]="transactionLoading$ | async" (changed)="transactionTableChange($event)"
                     (downloadClicked)="transactionDownload($event)" [showSubmit]="false" [preserveQueryParams]="true"
                     [preserveSearchQuery]="true" [isReport]="true"
-                    [searchQueryPlaceHolder]="'Find by content or mobile'" [haveDownload]="true"></app-data-table>
+                    [searchQueryPlaceHolder]="'Find by content or mobile'" [haveDownload]="true"
+                    [btns]="transactionBtns" (btnClicked)="transactionBtnClicked($event)"></app-data-table>
             </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list rowHeight="500" cols="1" style="margin-left: -20px">

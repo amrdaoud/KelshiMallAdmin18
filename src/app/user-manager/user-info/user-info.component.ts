@@ -13,7 +13,7 @@ import { TransactionService } from '../../transactions/transaction.service';
 import { TransactionFilterModel } from '../../transactions/transactions';
 import { DataTableButtonObject, DataTableOutput } from '../../app-reusables/data-table/data-table.models';
 import { Unsubscriber } from '../../app-reusables/common/unsubscriber';
-import { transactionConst } from '../../transactions/transaction.const';
+import { transactionButtons, transactionConst } from '../../transactions/transaction.const';
 import { DeviceService } from '../../app-reusables/services/device.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MembershipService } from '../../memberships/membership.service';
@@ -36,6 +36,7 @@ import { userAddressConst } from '../user-manager.const';
 import { AddressFilterModel, UserAddressListViewModel } from '../user-manager';
 import { QRCodeModule } from 'angularx-qrcode';
 import { MembershipExtendComponent } from '../membership-extend/membership-extend.component';
+import { TransactionAddComponent } from '../transaction-add/transaction-add.component';
 
 @Component({
     selector: 'app-user-info',
@@ -70,6 +71,7 @@ export class UserInfoComponent extends Unsubscriber{
   membershipData: any[] = [];
   membershipDataSize!: number;
   membershipFilter!: DataTableOutput;
+  transactionFilter!: DataTableOutput;
   membershipBtns: DataTableButtonObject[] = [
     {Text: 'Change Membership', Icon: 'card_membership', MatColor: 'primary'},
     {Text: 'Extend Membership', Icon: 'card_membership', MatColor: 'accent'}
@@ -83,6 +85,7 @@ export class UserInfoComponent extends Unsubscriber{
   addressFilter!: DataTableOutput;
   addressMenuBtns = userAddressConst.menuButtons;
   transactionLoading$ = this.transactionService.loadingList$;
+  loadingAddTransaction$ = this.transactionService.loadingAddTransaction$;
   membershipLoading$ = this.membershipService.loadingList$;
   postLoading$ = this.postService.loadingGetPostsByFiter$;
   loadingAddresses$ = this.mainService.loadingAddresses$;
@@ -98,7 +101,7 @@ export class UserInfoComponent extends Unsubscriber{
         return transactionConst.columns
     })
   );
-
+  transactionBtns = transactionButtons;
   membershipColumnDefs = this.deviceService.isHandset$.pipe(
     map((ishandset: boolean) => {
         if(ishandset) {
@@ -141,6 +144,7 @@ export class UserInfoComponent extends Unsubscriber{
   );
   loading$ = this.mainService.loadingList$;
   transactionTableChange(filter: DataTableOutput) {
+    this.transactionFilter = filter;
     this._otherSubscription = this.transactionService.getTransactionsByFilter({...filter as TransactionFilterModel, UserId: this.userId})
         .subscribe(ds => {
             this.transactionData = ds.data;
@@ -254,6 +258,24 @@ export class UserInfoComponent extends Unsubscriber{
       this.router.navigate(['/notification-manual'], {queryParams: {isExclude: true, userId: [object.obj.userId], title: object.obj.title, postId: object.obj.postId, route: 'adDetailsScreen', myPost: false, body: object.obj.description}})
     }
   }
+
+  transactionBtnClicked(index: number) {
+    if(index == 0) {
+      this.dialog.open(TransactionAddComponent, {data: {userId: this.userId, isToUser: true}, width: '300px'}).afterClosed().subscribe(result => {
+        if(result) {
+          this.transactionTableChange(this.transactionFilter);
+        }
+      })
+    }
+    if(index == 1) {
+      this.dialog.open(TransactionAddComponent, {data: {userId: this.userId, isToUser: false}, width: '300px'}).afterClosed().subscribe(result => {
+        if(result) {
+          this.transactionTableChange(this.transactionFilter);
+        }
+      })
+    }
+  }
+
   membershipBtnClicked(index: number) {
     if(index == 0) {
       this.dialog.open(MembershipAddComponent, {data: this.userId}).afterClosed().subscribe(result => {

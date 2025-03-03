@@ -73,3 +73,12 @@ export interface GenerateRedeemModel {
     ValidityValue: number;
     Note: string;
 }
+
+export interface TransactionBindingModel {
+    userId: string | null;
+    isToUser: boolean;
+    note: string | null;
+    amount: number;
+    description: string | null;
+    reference: string | null;
+}
